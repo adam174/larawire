@@ -4,21 +4,25 @@ namespace App\Http\Livewire\Product;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Category;
 
 
 class Index extends Component
 {
-    public $products = [];
-    public $productSingle = [];
+    public $products;
+    public $categories;
 
     public function mount()
     {
         $this->products = Product::get();
+        $this->categories = Category::get();
     }
 
-    public function showproduct($product)
+    public function filterProducts($category)
     {
-        $this->productSingle = Product::findOrFail($product);
+        $this->products = Product::where('category_id',$category)->get();
+
+
     }
     public function render()
     {
